@@ -1,41 +1,78 @@
 # Vector Data Collection Walk-Through
-This repo contains the scripts I used to generate my custom data set to teach an Anki Vector to identify another Anki Vector. Here I'll walkthrough process, obstacles and reccomendations if you plan on creating a dataset yourself. 
+
+This repository contains the scripts used to generate a custom dataset for training a computer vision model to recognize an Anki Vector robot. If you're looking to create your own dataset using multiple Vectors, this walkthrough will guide you through the setup and usage.
+
+## Dataset Recommendations
+
+- **Transfer Learning with YOLOv8**: YOLOv8 is a model pre-trained on thousands of images and classes with conditioned weights. By leveraging transfer learning, we can train a model with a relatively smaller dataset. I successfully trained my model with around **300 images**, but more data is always better for improving model performance.
+  
+- **Triangle Setup for Better Data Capture**: In `moving.py`, I recommend using an **11-inch equilateral triangle**. This smaller distance helps the camera and model better recognize and classify the Vector. Since the Vector is primarily black, it can be hard to distinguish from the background at larger distances, which can make it challenging for the model to recognize and draw a bounding box.
+  
+- **Include True Negatives**: Adding **True Negatives** to your dataset makes it more robust. Instead of only including images with the Vector in different positions and rotations, include images where no Vector is present. I suggest collecting at least **75 True Negative images**, but more would be better.
+
+- **Use CVAT for Annotation**: I used [CVAT](https://www.cvat.ai/) to annotate my images. It’s a great tool for labeling bounding boxes and annotating your dataset effectively.
+  
+- **Add Noise to the Dataset**: Adding noise (such as other black objects or random objects in the background) helps the model generalize better. I recommend taking pictures with objects visible in the environment, not just the Vector.
 
 
 ## Get Started
 
-Install python 3.11.x or higher 
+1. Install Python
+Make sure you have **Python 3.11.x or higher** installed.
 
-'''
-python -m venv .venv 
+2. Set Up a Virtual Environment
+
+Open a terminal and run:
+```
+python -m venv .venv
 .\.venv\Scripts\activate
-''' bash 
-Install all the pip packages:
-''' pip install -r requirements.txt ''' bash
+```
+3. Install Dependencies
+Once the environment is activated, install the required packages:
+```
+pip install -r requirements.txt
+```
+
+5. 🤖 Vector SDK Setup
+
+You’ll need **two Anki Vector robots** configured with the SDK in order to run the data collection scripts.
+
+Follow these setup guides:
+
+- 📦 [Vector Setup by mparekh99](https://github.com/mparekh99/Vector-Setup)
+- 🔌 [WIREPOD Installation Guide](https://github.com/kercre123/wire-pod/wiki/Installation)
+- 🧠 [Wirepod Python SDK for Vector](https://github.com/kercre123/wirepod-vector-python-sdk)
+
+> ⚠️ Make sure both Vectors are paired and configured via the WIREPOD and SDK before running any scripts.
 
 
-Then Configure two Anki Vector robots with the SDK following: https://github.com/mparekh99/Vector-Setup 
-Look Here for more help:WIREPOD https://github.com/kercre123/wire-pod/wiki/Installation 
-SDK - https://github.com/kercre123/wirepod-vector-python-sdk?tab=readme-ov-file
+# Usage
+On Vector #1, run the data collection script:
+```
+python datacollect.py
+```
 
-Then simply run python datacollect.py on one Vector 
-And in another terminal activate environment and run python moving.py with the other vector. 
+Before starting, position **Vector #2** exactly **11 inches in front of Vector #1**, facing it. This spot will serve as Vector #2’s starting position and is considered the origin `(0, 0)`.
 
+Make sure Vector #2 has at least **11 inches of free space to both its left and right**. It will use this space to navigate randomly within a triangular area measuring approximately 11 inches by 11 inches by 11 inches. This triangle extends forward and side-to-side from Vector #2’s starting point to ensure varied movement and data capture.
 
+In a **separate terminal**, activate the virtual environment again and run the following command on **Vector #2** to begin its movement:
+```
+python moving.py
+``` 
 
-## Reflection 
+This setup lets one Vector capture images while the other one moves, enabling dynamic data collection.
 
-A big lesson I learned is that your model is only as your data. Initially I collected data: show pic:
-Talk about why this is bad
+### 📷 Optional: Manual Photography Mode
 
-THen show new attempt:
-(EXPLAIN EACH)
-Regular Pic:
-Noise Pic:
-Darker Pic:
-True Neg:
+If you prefer more control over the image capture process, you can use `photographer.py`.
 
+This script allows you to manually control a Vector robot using your keyboard:
 
-## Obstacles
+- Use the **arrow keys** to move the robot.
+- Press **Spacebar** to take a photo using the front-facing camera.
 
-## Recommendations 
+To run the manual capture mode:
+```
+python photographer.py
+```
