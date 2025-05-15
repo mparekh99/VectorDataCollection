@@ -2,6 +2,27 @@
 
 This repository contains the scripts used to generate a custom dataset for training a computer vision model to recognize an Anki Vector robot. If you're looking to create your own dataset using multiple Vectors, this walkthrough will guide you through the setup and usage.
 
+## Overview
+This project uses **two Anki Vector robots** connected to the **same laptop** to collect training data for a computer vision model.
+
+### 🤖 Roles
+
+- **Vector #1 (Camera Bot)**  
+  Acts as the **photographer**. It captures images when signaled by the second Vector.
+
+- **Vector #2 (Target Bot)**  
+  Navigates to **random positions** within a defined **equilateral triangle**, performs a **random rotation**, then signals when ready to be photographed.
+
+---
+
+### 🔄 Workflow
+
+1. **Vector #2** moves to a **random point** within a defined **equilateral triangle** and performs a **random rotation**.
+2. It sends a signal to **Vector #1** using **socket communication**, indicating it is ready for a photo.
+3. **Vector #1**, which is listening for the signal, captures an image.
+4. **Vector #2** returns to its **starting position**.
+5. The process **repeats**, generating images with varying positions and orientations.
+
 ## Dataset Recommendations
 
 - **Transfer Learning with YOLOv8**: YOLOv8 is a model pre-trained on thousands of images and classes with conditioned weights. By leveraging transfer learning, we can train a model with a relatively smaller dataset. I successfully trained my model with around **300 images**, but more data is always better for improving model performance.
