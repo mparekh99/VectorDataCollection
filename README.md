@@ -38,7 +38,7 @@ This project uses **two Anki Vector robots** connected to the **same laptop** to
 
 ## Get Started
 
-1. Clone Repo:
+1. Clone Repo
 ```
 git clone https://github.com/mparekh99/VectorDataCollection.git
 ```
