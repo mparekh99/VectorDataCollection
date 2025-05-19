@@ -41,6 +41,7 @@ This project uses **two Anki Vector robots** connected to the **same laptop** to
 ### 1. Clone Repo
 ```bash
 git clone https://github.com/mparekh99/VectorDataCollection.git
+cd VectorDataCollection
 ```
 
 ### 2. Install Python
