@@ -38,17 +38,22 @@ This project uses **two Anki Vector robots** connected to the **same laptop** to
 
 ## Get Started
 
-1. Install Python
+1. Clone Repo:
+```
+git clone https://github.com/mparekh99/VectorDataCollection.git
+```
+
+2. Install Python
 Make sure you have **Python 3.11.x or higher** installed.
 
-2. Set Up a Virtual Environment
+3. Set Up a Virtual Environment
 
 Open a terminal and run:
 ```
 python -m venv .venv
 .\.venv\Scripts\activate
 ```
-3. Install Dependencies
+4. Install Dependencies
 Once the environment is activated, install the required packages:
 ```
 pip install -r requirements.txt
